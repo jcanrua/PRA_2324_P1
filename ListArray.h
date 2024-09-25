@@ -82,28 +82,74 @@ void ListArray<T>::insert(int pos, T e){
 	}
 	else{
 		ListArray<T>::resize(max+1);
-		
-		
+		for(int i = max; i > pos; i--){
+			arr[i] = arr[i-1];
+		}
+		arr[pos] = e;
+	}
+}
+
+
+template <typename T>
+void ListArray<T>::append(T e){
+	insert(max+1,e);
+}		
 	
 
+template <typename T>
+void ListArray<T>::prepend(T e){
+	insert(0, e);
+}		
 
 
+template <typename T>
+T ListArray<T>::remove(int pos){
+	T tmp;
+	if(pos < 0 || pos > size()-1){
+		throw std::out_of_range("Rango incorrecto");
+	}
+	else{
+		tmp = arr[pos];
+		for(int i = pos+1; i < max; i++){
+			arr[i-1] = arr[i];
+		}
+		resize(max-1);
+		return tmp;
+	}		
+}
 
 
+template <typename T>
+T ListArray<T>::get(int pos){
+	if(pos < 0 || pos > size()-1){
+		throw std::out_of_range("Rango incorrecto");
+	}
+	else{
+		return arr[pos];
+	}		
+}
 
+template <typename T>
+int ListArray<T>::search(T e){
+	for(int i = 0; i < max; i++){
+		if(e = arr[i]){
+			return i;
+		}
+	}
+	return -1;
+}
 
+template <typename T>
+bool ListArray<T>::empty(){
+	if(n == 0){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+template <typename T>
+int ListArray<T>::size(){
+	return n;
 }
