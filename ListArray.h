@@ -19,7 +19,7 @@ class ListArray : public List<T> {
 		friend std::ostream& operator<<(std::ostream &out, const ListArray<T> &list);
 		
 		//heredados
-		void insert(int pos, T e) override final
+		void insert(int pos, T e) override final;
 		void append(T e) override final;
 		void prepend(T e) override final;
 		T remove(int pos) override final;
@@ -34,19 +34,19 @@ template <typename T>
 const int ListArray<T>::MINSIZE = 2;
 
 template <typename T>
-ListArray::ListArray(){
+ListArray<T>::ListArray(){
 	new T [MINSIZE];
 	max = MINSIZE;
 	n = 0;
 }
 
 template <typename T>
-ListArray::~ListArray(){
+ListArray<T>::~ListArray(){
 	delete[] arr;
 }
 
 template <typename T>
-T ListArray::operator[](int pos){
+T ListArray<T>::operator[](int pos){
 	if(pos > size()-1 || pos < 0){
 		throw std::out_of_range("Esta fuera de rango");
 	}
@@ -64,7 +64,7 @@ std::ostream& operator<<(std::ostream &out, const ListArray<T> &list){
 }
 
 template <typename T>
-void ListArray::resize(int new_size){
+void ListArray<T>::resize(int new_size){
 	T* new_arr = new T[new_size];
 	for(int i = 0; i < n; i++){
 		new_arr[i] = arr[i];
@@ -74,3 +74,36 @@ void ListArray::resize(int new_size){
 	max = new_size;
 }
 
+
+template <typename T>
+void ListArray<T>::insert(int pos, T e){
+	if(pos < 0 || pos > size()){
+		throw std::out_of_range("No esta en rango");
+	}
+	else{
+		ListArray<T>::resize(max+1);
+		
+		
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
