@@ -16,7 +16,8 @@ class ListArray : public List<T> {
 		ListArray();
 		~ListArray();
 		T operator[](int pos);
-		friend std::ostream& operator<<(std::ostream &out, const ListArray<T> &list);
+		template <typename U>
+		friend std::ostream& operator<<(std::ostream &out, const ListArray<U> &list);
 		
 		//heredados
 		void insert(int pos, T e) override final;
