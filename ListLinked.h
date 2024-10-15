@@ -13,9 +13,17 @@ class ListLinked : public List<T> {
 		ListLinked();
 		~ListLinked();
 		T operator[](int pos);
-		Node<T>* getFirst() const;
-		template <typename U>		
-		friend std::ostream& operator<<(std::ostream &out, const ListLinked<T> &list);
+		friend std::ostream& operator<<(std::ostream &out, const ListLinked<T> &list){
+			Node<T>* current = list.first;
+			while (current != nullptr) {
+       			out << current->data;
+        		current = current->next;
+        		if (current != nullptr) {
+           			out << ", ";
+    			}
+			}
+			return out;
+		}
 
 		//heredados
 		void insert(int pos, T e) override final;
@@ -58,14 +66,10 @@ T ListLinked<T>::operator[](int pos){
 		return current->data;	
 	}
 }
-template <typename T>
-Node<T>* ListLinked<T>::getFirst() const{
- 	return first;
-}
 
-template <typename T>
-std::ostream& operator<<(std::ostream &out, const ListLinked<T> &list){
-	Node<T>* current = list.getFirst();
+/*template <typename T>
+friend std::ostream& operator<<(std::ostream &out, const ListLinked<T> &list){
+	Node<T>* current = list.first;
 	while (current != nullptr) {
         out << current->data;
         current = current->next;
@@ -74,7 +78,7 @@ std::ostream& operator<<(std::ostream &out, const ListLinked<T> &list){
         }
     }
 	return out;
-}
+}*/
 
 template <typename T>
 void ListLinked<T>::insert(int pos, T e){
