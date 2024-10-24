@@ -36,7 +36,7 @@ const int ListArray<T>::MINSIZE = 2;
 
 template <typename T>
 ListArray<T>::ListArray(){
-	new T [MINSIZE];
+	arr = new T [MINSIZE];
 	max = MINSIZE;
 	n = 0;
 }
@@ -67,10 +67,12 @@ std::ostream& operator<<(std::ostream &out, const ListArray<T> &list){
 template <typename T>
 void ListArray<T>::resize(int new_size){
 	T* new_arr = new T[new_size];
-	for(int i = 0; i < n; i++){
+	for(int i = 0; i < std::min(n, new_size); i++){
 		new_arr[i] = arr[i];
 	}
-	delete[] arr;
+	if (arr != nullptr){
+		delete[] arr;
+	}
 	arr = new_arr;
 	max = new_size;
 }
@@ -78,22 +80,23 @@ void ListArray<T>::resize(int new_size){
 
 template <typename T>
 void ListArray<T>::insert(int pos, T e){
-	if(pos < 0 || pos > size()){
+	if(pos < 0 || pos > n){
 		throw std::out_of_range("No esta en rango");
 	}
 	else{
 		ListArray<T>::resize(max+1);
-		for(int i = max; i > pos; i--){
+		for(int i = n; i > pos; i--){
 			arr[i] = arr[i-1];
 		}
 		arr[pos] = e;
+		n++;
 	}
 }
 
 
 template <typename T>
 void ListArray<T>::append(T e){
-	insert(max+1,e);
+	insert(n,e);
 }		
 	
 
@@ -106,15 +109,16 @@ void ListArray<T>::prepend(T e){
 template <typename T>
 T ListArray<T>::remove(int pos){
 	T tmp;
-	if(pos < 0 || pos > size()-1){
+	if(pos < 0 || pos >= n){
 		throw std::out_of_range("Rango incorrecto");
 	}
 	else{
 		tmp = arr[pos];
-		for(int i = pos+1; i < max; i++){
+		for(int i = pos+1; i < n; i++){
 			arr[i-1] = arr[i];
 		}
 		resize(max-1);
+		n--;
 		return tmp;
 	}		
 }
@@ -132,8 +136,8 @@ T ListArray<T>::get(int pos){
 
 template <typename T>
 int ListArray<T>::search(T e){
-	for(int i = 0; i < max; i++){
-		if(e = arr[i]){
+	for(int i = 0; i < n; i++){
+		if(e == arr[i]){
 			return i;
 		}
 	}
